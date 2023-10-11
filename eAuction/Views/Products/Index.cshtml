@@ -1,0 +1,61 @@
+﻿@model IEnumerable<ProductModel>
+
+<div class="row">
+    <div>
+        <p>
+            <h1>Current Auctions</h1>
+        </p>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Seller</th>
+                    <th>Top Bid</th>
+                    <th>Time Remaining (Days left)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.ProductId">
+                            @Html.DisplayFor(modelItem => item.ProductName)
+                        </a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SellerName)
+                    </td>                   
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HighestBid)
+                    </td>                    
+                    <td>
+                        @Html.DisplayFor(modelItem => (item.EndingDate - item.StartingDate).Days)
+                            @if((item.EndingDate - item.StartingDate).Days > 1)
+                            {
+                                <span>Days</span>
+                            }
+                            else
+                            {
+                                <span>Day</span>    
+                            }
+                            
+                        </td>
+                    <td>
+                            <a asp-action="Delete" asp-route-id="@item.ProductId">
+                                Delete 
+                            </a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+
+<div class="text-white">
+    <a style="float: right;" class="btn btn-success" asp-action="Create" asp-controller="Products"><i class="bi bi-plus-circle">New Auction</i></a>
+</div>
